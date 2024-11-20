@@ -57,17 +57,14 @@ class BackgroundJobRunner
      * @param string $method
      * @return bool
      */
-    private function isValidJob(string $className, string $method): bool
+    private function isValidJob(string $className, string $methodName): bool
     {
         // Define a list of allowed classes and methods
-        $allowedClasses = ['App\\Jobs\\ExampleJob']; // Example of allowed classes
-        $allowedMethods = ['handle']; // Example of allowed methods
-
-        if (in_array($className, $allowedClasses) && in_array($method, $allowedMethods)) {
-            return true;
-        }
-
-        return false;
+        $allowedJobs = [
+            'App\\Jobs\\ExampleJob' => ['handle'],
+        ];
+    
+        return isset($allowedJobs[$className]) && in_array($methodName, $allowedJobs[$className]);
     }
 
     /**
